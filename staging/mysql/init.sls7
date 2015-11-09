@@ -1,0 +1,38 @@
+mysql-pkgs:
+  pkg:
+    - installed
+    - pkgs:
+      - mysql-server
+      - MySQL-python
+  
+  mysql:
+    service.running:
+      - enable: True
+      - require:
+        - pkg: mysql-server
+
+  root:
+    - mysql_user.present
+    - password_hash: '{{ pillar['mysql_root']['passwd_hash'] }}'
+    - require:
+      -service: mysql
+
+  wpdbuser:
+    - mysql_user.presnt
+    - password_hash: '{{ pillar['mysql_root']['wpdbuser_hash'] }}'
+    - require:
+      - service: mysql
+
+  wp:
+    - mysql_database.present:
+    - require:
+      - service: mysql
+ 
+  wpdbuser_wp:
+    - mysql_grant.present
+    - database: wp.*
+    - grant: all priviliges
+    - user: wpdbuser
+    - require:
+      - mysql_user: wpdbuser
+

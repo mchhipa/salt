@@ -1,0 +1,30 @@
+mysql-client:
+  pkg.installed
+
+mysql-server:
+  pkg.installed
+    
+python-mysqldb:
+  pkg.installed
+  
+mysql:
+  service.running:
+    - enable: True
+    - require:
+      - pkg: mysql-server
+
+mysql-wpdbuser:
+  mysql_user.present:
+    - name : wpdbuser
+    - password_hash: '{{ pillar['mysql_root']['passwd_hash'] }}'
+    - require:
+      - service: mysql
+
+wp:
+  mysql_database.present
+
+wpdbuser-grant:
+  mysql_grants.present:
+    - grant: all privileges
+    - database: wp.*
+    - user: wpdbuser

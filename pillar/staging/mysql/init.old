@@ -1,0 +1,3 @@
+mysql_root:
+  passwd: 1qaz@WSX
+  passwd_hash:'92d7ddd2a010c59511dc2905b7e14f64'

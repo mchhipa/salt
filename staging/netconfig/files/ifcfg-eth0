@@ -1,0 +1,8 @@
+DEVICE=eth0
+HWADDR={{ hwaddr }}
+TYPE=Ethernet
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=none
+IPADDR={{ ipaddr }}
+NETMASK={{ netmask}}
